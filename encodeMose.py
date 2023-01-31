@@ -10,3 +10,31 @@ char_to_dots = {
     ':': '---...', ',': '--..--', '=': '-...-', '!': '-.-.--', '.': '.-.-.-',
     '-': '-....-', '+': '.-.-.', '"': '.-..-.', '?': '..--..', '/': '-..-.'
 }
+"""
+ Passos para codificar string em morse
+ Passo 1: Receber string;
+ Passo 2: Tratar string;
+ Passo 3: Começar a montar a nova string com o morse;
+ Passo 4: Retornar a string alterada;
+"""
+
+
+def encodeMorse(stringToEncode):
+    stringToEncode = processingStr(stringToEncode)
+
+    return
+
+
+""" Processing a str, remove unnecessary spaces into string and 
+    transform a str in uppercase
+"""
+
+
+def processingStr(string):
+    newStr = ""
+    for i in range(len(string)):
+        if(string[i] == " " and string[i-1] == " "):
+            pass
+        else:
+            newStr += string[i]
+    return newStr.upper()
