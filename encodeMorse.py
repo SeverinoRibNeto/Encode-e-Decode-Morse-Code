@@ -1,3 +1,5 @@
+from unidecode import unidecode
+
 char_to_dots = {
     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
     'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
@@ -10,23 +12,40 @@ char_to_dots = {
     ':': '---...', ',': '--..--', '=': '-...-', '!': '-.-.--', '.': '.-.-.-',
     '-': '-....-', '+': '.-.-.', '"': '.-..-.', '?': '..--..', '/': '-..-.'
 }
-"""
- Passos para codificar string em morse
- Passo 1: Receber string;
- Passo 2: Tratar string;
- Passo 3: Começar a montar a nova string com o morse;
- Passo 4: Retornar a string alterada;
+
+""""
+    Function to encode morse code. Recive a str and return encoded in morse
 """
 
 
 def encodeMorse(stringToEncode):
     stringToEncode = processingStr(stringToEncode)
+    morseCode = ""
+    for char in stringToEncode:
+        if(char in char_to_dots):
+            morseCode += char_to_dots[char]+" "
+    return morseCode[:-1]
 
-    return
+
+""""
+    Function to process a morse code and return a string text
+"""
 
 
-""" Processing a str, remove unnecessary spaces into string and 
-    transform a str in uppercase
+def decodeMorse(stringToDecode):
+    stringToDecode = processingStr(stringToDecode)
+    stringToDecode = stringToDecode.split()
+    stringFinal = ""
+    for letter in stringToDecode:
+        for key in char_to_dots.keys():
+            if(char_to_dots[key] == letter):
+                stringFinal += key + " "
+    return stringFinal[:-1]
+
+
+""" 
+    Processing a str, remove unnecessary spaces into string and 
+    transform a str in uppercase, replace strings using unidecode
 """
 
 
@@ -37,4 +56,4 @@ def processingStr(string):
             pass
         else:
             newStr += string[i]
-    return newStr.upper()
+    return unidecode(newStr.upper())
