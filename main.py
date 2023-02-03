@@ -43,6 +43,16 @@ def decodingMorseToSong():
     playSounds(decode)
 
 
+def radioSelection():
+    if(str(optionVar.get()) == 'decode'):
+        txtBtn.set("Decode Message")
+        encodeBtn['textvariable'] = txtBtn
+        print('decode')
+    elif(str(optionVar.get()) == 'code'):
+        txtBtn.set("Encode Message")
+        encodeBtn['textvariable'] = txtBtn
+
+
 """
     Inicial screen variables
 """
@@ -74,10 +84,16 @@ infoTextLb.grid(columns=1, row=2, padx=10, pady=10)
 
 textToConvertEn = Entry(frame, width=100)
 textToConvertEn.grid(column=1, row=2, padx=20, pady=20)
+optionVar = StringVar(None, 'code')
+Radiobutton(frame, value='code', variable=optionVar, text='Code', command=radioSelection).grid(
+    column=0, row=3, padx=10, pady=10)
+Radiobutton(frame, value='decode', variable=optionVar, text='Decode', command=radioSelection).grid(
+    column=1, row=3, padx=10, pady=10)
 
-encodeBnt = Button(frame, text="Encode Message",
-                   command=encodingMorse)
-encodeBnt.grid(column=1, row=3, padx=10, pady=10)
+txtBtn = StringVar(None, "Encode Message")
+
+encodeBtn = Button(frame, textvariable=txtBtn, command=encodingMorse)
+encodeBtn.grid(column=2, row=3, padx=10, pady=10)
 
 
 """
@@ -92,8 +108,8 @@ morseCodeTxBox.grid(column=1, row=6, padx=20, pady=20)
 """
         Comando de tocar quase completo. Precisa ajustar.
     """
-playsoundsBnt = Button(frame2, text="Play Morse Code",
+playsoundsBtn = Button(frame2, text="Play Morse Code",
                        command=decodingMorseToSong)
-playsoundsBnt.grid(column=2, row=6)
+playsoundsBtn.grid(column=2, row=6)
 
 inicialScreen.mainloop()
