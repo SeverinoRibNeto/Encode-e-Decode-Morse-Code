@@ -1,6 +1,5 @@
 import os
 import time
-from functools import partial
 from tkinter import *
 from tkinter import ttk
 
@@ -15,6 +14,8 @@ import encodeMorse
 
 ###GLOBAL VAR####
 textEntry = ''
+langPtBr = {}
+langEn = {}
 
 
 def playSounds(sounds):
@@ -30,10 +31,11 @@ def playSounds(sounds):
 
 def encodingMorse():
     global textEntry
-    print(textEntry)
+    morseCodeTxBox.delete('1.0', 'end')
     textEntry = textToConvertEn.get()
     codeMorse = encodeMorse.encodeMorse(textEntry)
     morseCode.set(codeMorse)
+    morseCodeTxBox.insert(END, encodeMorse.encodeMorse(textToConvertEn.get()))
 
 
 def decodingMorseToSong():
@@ -84,13 +86,14 @@ encodeBnt.grid(column=1, row=3, padx=10, pady=10)
 titleFrame2 = Label(frame2, text="Message in Morse Code")
 titleFrame2.grid(column=1, row=4, padx=10, pady=10)
 morseCode = StringVar()
-morseTextLb = Label(frame2, textvariable=morseCode, bg="white")
-morseTextLb.grid(column=1, row=5, padx=20, pady=20)
-
+morseCodeTxBox = Text(frame2, height=5, width=100,
+                      bg="light cyan")
+morseCodeTxBox.grid(column=1, row=6, padx=20, pady=20)
 """
         Comando de tocar quase completo. Precisa ajustar.
     """
 playsoundsBnt = Button(frame2, text="Play Morse Code",
                        command=decodingMorseToSong)
 playsoundsBnt.grid(column=2, row=6)
+
 inicialScreen.mainloop()
