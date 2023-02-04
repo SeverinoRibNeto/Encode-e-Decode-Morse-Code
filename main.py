@@ -94,7 +94,8 @@ def changeLanguage(choise):
         infoTextTxt.set(langPtBr["infoText"])
         radioCode.set(langPtBr["radioCode"])
         radioDecode.set(langPtBr["radioDecode"])
-        encodeBtn['textvariable'] = txtBtn.set(langPtBr["txtBtn"])
+        # txtBtn.set(langPtBr["txtBtn"])
+        #encodeBtn['textvariable'] = txtBtn
         titleFrame2Txt.set(langPtBr["titleFrame2"])
         playsoundsBtn['textvariable'] = playsoundsBtnTxt.set(
             langPtBr["playsoundsBtn"])
@@ -105,7 +106,7 @@ def changeLanguage(choise):
         infoTextTxt.set(langEn["infoText"])
         radioCode.set(langEn["radioCode"])
         radioDecode.set(langEn["radioDecode"])
-        txtBtn.set(langEn["txtBtn"])
+        # txtBtn.set(langEn["txtBtn"])
         titleFrame2Txt.set(langEn["titleFrame2"])
         playsoundsBtnTxt.set(langEn["playsoundsBtn"])
 
