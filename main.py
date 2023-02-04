@@ -15,6 +15,7 @@ import encodeMorse
 ###GLOBAL VAR####
 textEntry = ''
 lang = 'English'  # Initial language
+radioSelect = ''  # Option Radio Button
 
 ###LANG DICT###
 langPtBr = {"language": "Português Brasil",
@@ -22,7 +23,8 @@ langPtBr = {"language": "Português Brasil",
             "projectTitle": "Codificador e Decodificador de Código Morse",
             "instru": "Use esse aplicativo para gerar um código Morse, decodificar e escutar esse código",
             "infoText": "Escreva a mensagem a ser códificada em código Morse",
-            "textBtn": "Codificar Mens",
+            "textBtnCode": "Codificar Mens",
+            "textBtnDecode": "Decodificar Mens",
             "titleFrame2": "Mensagem em Código Morse",
             "playsoundsBtn": "Tocar Código Morse",
             "radioCode": "Codificar",
@@ -33,7 +35,8 @@ langEn = {"language": "English",
           "projectTitle": "Encode and Decode Morse Code",
           "instru": "Use this app to generate a Morse code, decode and listen a sound of code",
           "infoText": "Write your message to code to Morse code:",
-          "textBtn": "Encode Message",
+          "textBtnCode": "Encode Message",
+          "textBtnDecode": "Decode Message",
           "titleFrame2": "Message in Morse Code",
           "playsoundsBtn": "Play Morse Code",
           "radioCode": "Code",
@@ -76,21 +79,22 @@ def decodingMorseToSong():
 
 
 def radioSelection():
-    global lang, langEn, langPtBr
+    global lang, langEn, langPtBr, radioSelect
+    radioSelect = str(optionVar.get())
     if(str(optionVar.get()) == 'decode' and lang == langEn["language"]):
-        txtBtn.set(str(langEn["textBtn"]))
+        txtBtn.set(langEn["textBtnDecode"])
         encodeBtn['textvariable'] = txtBtn
         encodeBtn['command'] = decodingMorse
     elif(str(optionVar.get()) == 'decode' and lang == langPtBr["language"]):
-        txtBtn.set(langPtBr["textBtn"])
+        txtBtn.set(langPtBr["textBtnDecode"])
         encodeBtn['textvariable'] = txtBtn
         encodeBtn['command'] = decodingMorse
     elif(str(optionVar.get()) == 'code' and lang == langEn["language"]):
-        txtBtn.set(langEn["textBtn"])
+        txtBtn.set(langEn["textBtnCode"])
         encodeBtn['textvariable'] = txtBtn
         encodeBtn['command'] = encodingMorse
     elif(str(optionVar.get()) == 'code' and lang == langPtBr["language"]):
-        txtBtn.set(langPtBr["textBtn"])
+        txtBtn.set(langPtBr["textBtnCode"])
         encodeBtn['textvariable'] = txtBtn
         encodeBtn['command'] = encodingMorse
     else:
@@ -98,7 +102,7 @@ def radioSelection():
 
 
 def changeLanguage(choise):
-    global lang, langPtBr, langEn
+    global lang, langPtBr, langEn, radioSelect
     lang = choise
     if(choise == langPtBr["language"]):
         projectTitleTxt.set(langPtBr["projectTitle"])
@@ -106,7 +110,10 @@ def changeLanguage(choise):
         infoTextTxt.set(langPtBr["infoText"])
         radioCode.set(langPtBr["radioCode"])
         radioDecode.set(langPtBr["radioDecode"])
-        txtBtn.set(langPtBr["textBtn"])
+        if(radioSelect == 'decode'):
+            txtBtn.set(langPtBr["textBtnDecode"])
+        elif(radioSelect == 'code'):
+            txtBtn.set(langPtBr["textBtnCode"])
         titleFrame2Txt.set(langPtBr["titleFrame2"])
         playsoundsBtn['textvariable'] = playsoundsBtnTxt.set(
             langPtBr["playsoundsBtn"])
@@ -117,7 +124,10 @@ def changeLanguage(choise):
         infoTextTxt.set(langEn["infoText"])
         radioCode.set(langEn["radioCode"])
         radioDecode.set(langEn["radioDecode"])
-        txtBtn.set(langEn["textBtn"])
+        if(radioSelect == 'decode'):
+            txtBtn.set(langEn["textBtnDecode"])
+        elif(radioSelect == 'code'):
+            txtBtn.set(langEn["textBtnCode"])
         titleFrame2Txt.set(langEn["titleFrame2"])
         playsoundsBtnTxt.set(langEn["playsoundsBtn"])
 
