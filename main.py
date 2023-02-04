@@ -14,8 +14,30 @@ import encodeMorse
 
 ###GLOBAL VAR####
 textEntry = ''
-langPtBr = {}
-langEn = {}
+
+###LANG DICT###
+langPtBr = {"language": "Português Brasil",
+            "titleWindow": "",
+            "projectTitle": "Codificador e Decodificador de Código Morse",
+            "instru": "Use esse aplicativo para gerar um código Morse, decodificar e escutar esse código",
+            "infoText": "Escreva a mensagem a ser códificada em código Morse",
+            "textBtn": "Codificar Mens",
+            "titleFrame2": "Mensagem em Código Morse",
+            "playsoundsBtn": "Tocar Código Morse",
+            "radioCode": "Codificar",
+            "radioDecode": "Decodificar"}
+
+langEn = {"language": "English",
+          "titleWindow": "",
+          "projectTitle": "Encode and Decode Morse Code",
+          "instru": "Use this app to generate a Morse code, decode and listen a sound of code",
+          "infoText": "Write your message to code to Morse code:",
+          "textBtn": "Encode Message",
+          "titleFrame2": "Message in Morse Code",
+          "playsoundsBtn": "Play Morse Code",
+          "radioCode": "Code",
+          "radioDecode": "Decode"}
+# END LANG VAR
 
 
 def playSounds(sounds):
@@ -35,7 +57,16 @@ def encodingMorse():
     textEntry = textToConvertEn.get()
     codeMorse = encodeMorse.encodeMorse(textEntry)
     morseCode.set(codeMorse)
-    morseCodeTxBox.insert(END, encodeMorse.encodeMorse(textToConvertEn.get()))
+    morseCodeTxBox.insert(END, codeMorse)
+
+
+def decodingMorse():
+    global textEntry
+    morseCodeTxBox.delete('1.0', 'end')
+    textEntry = textToConvertEn.get()
+    codeMorse = encodeMorse.decodeMorse(textEntry)
+    morseCode.set(codeMorse)
+    morseCodeTxBox.insert(END, codeMorse)
 
 
 def decodingMorseToSong():
@@ -47,10 +78,39 @@ def radioSelection():
     if(str(optionVar.get()) == 'decode'):
         txtBtn.set("Decode Message")
         encodeBtn['textvariable'] = txtBtn
-        print('decode')
+        encodeBtn['command'] = decodingMorse
     elif(str(optionVar.get()) == 'code'):
         txtBtn.set("Encode Message")
         encodeBtn['textvariable'] = txtBtn
+        encodeBtn['command'] = encodingMorse
+    else:
+        print("Error!")
+
+
+def changeLanguage(choise):
+    if(choise == langPtBr["language"]):
+        projectTitleTxt.set(langPtBr["projectTitle"])
+        instruTxt.set(langPtBr["instru"])
+        infoTextTxt.set(langPtBr["infoText"])
+        radioCode.set(langPtBr["radioCode"])
+        radioDecode.set(langPtBr["radioDecode"])
+        encodeBtn['textvariable'] = txtBtn.set(langPtBr["txtBtn"])
+        titleFrame2Txt.set(langPtBr["titleFrame2"])
+        playsoundsBtn['textvariable'] = playsoundsBtnTxt.set(
+            langPtBr["playsoundsBtn"])
+
+    elif(choise == langEn["language"]):
+        projectTitleTxt.set(langEn["projectTitle"])
+        instruTxt.set(langEn["instru"])
+        infoTextTxt.set(langEn["infoText"])
+        radioCode.set(langEn["radioCode"])
+        radioDecode.set(langEn["radioDecode"])
+        txtBtn.set(langEn["txtBtn"])
+        titleFrame2Txt.set(langEn["titleFrame2"])
+        playsoundsBtnTxt.set(langEn["playsoundsBtn"])
+
+    else:
+        pass
 
 
 """
@@ -66,31 +126,47 @@ frame.grid()
 frame2 = ttk.Frame(inicialScreen, padding=20)
 frame2.grid()
 
+# Text Var Declaration
+projectTitleTxt = StringVar(None, "Encode and Decode Morse Code")
+instruTxt = StringVar(
+    None, "Use this app to generate a Morse code, decode and listen a sound of code")
+infoTextTxt = StringVar(None, "Write your message to code to Morse code:")
+radioCode = StringVar(None, "Code")
+radioDecode = StringVar(None, "Decode")
+txtBtn = StringVar(None, "Encode Message")
+titleFrame2Txt = StringVar(None, "Message in Morse Code")
+playsoundsBtnTxt = StringVar(None, "Play Morse Code")
+
 """
         First frame components
 """
 titleProjLb = Label(frame,
-                    text="Encode and Decode Morse Code",
+                    textvariable=projectTitleTxt,
                     font=('Arial Bold', 20)
                     )
-titleProjLb.grid(columns=2, row=0)
+titleProjLb.grid(columns=3, row=0)
 
-instrucLb = Label(frame, text="Use this app to generate a Morse code, decode and listen a sound of code",
+langList = [langPtBr["language"], langEn["language"]]
+langSelected = StringVar(inicialScreen, "Language")
+print(langList)
+
+langSelect = OptionMenu(frame, langSelected, *langList, command=changeLanguage)
+langSelect.grid(columns=1, row=0, padx=10, pady=10)
+
+instrucLb = Label(frame, textvariable=instruTxt,
                   font=('Arial normal', 12))
 instrucLb.grid(columns=2, row=1, padx=10, pady=10)
 
-infoTextLb = Label(frame, text="Write your message to code to Morse code:")
+infoTextLb = Label(frame, textvariable=infoTextTxt)
 infoTextLb.grid(columns=1, row=2, padx=10, pady=10)
 
 textToConvertEn = Entry(frame, width=100)
 textToConvertEn.grid(column=1, row=2, padx=20, pady=20)
 optionVar = StringVar(None, 'code')
-Radiobutton(frame, value='code', variable=optionVar, text='Code', command=radioSelection).grid(
+Radiobutton(frame, value='code', variable=optionVar, textvariable=radioCode, command=radioSelection).grid(
     column=0, row=3, padx=10, pady=10)
-Radiobutton(frame, value='decode', variable=optionVar, text='Decode', command=radioSelection).grid(
+Radiobutton(frame, value='decode', variable=optionVar, textvariable=radioDecode, command=radioSelection).grid(
     column=1, row=3, padx=10, pady=10)
-
-txtBtn = StringVar(None, "Encode Message")
 
 encodeBtn = Button(frame, textvariable=txtBtn, command=encodingMorse)
 encodeBtn.grid(column=2, row=3, padx=10, pady=10)
@@ -99,7 +175,7 @@ encodeBtn.grid(column=2, row=3, padx=10, pady=10)
 """
     Second frame components
 """
-titleFrame2 = Label(frame2, text="Message in Morse Code")
+titleFrame2 = Label(frame2, textvariable=titleFrame2Txt)
 titleFrame2.grid(column=1, row=4, padx=10, pady=10)
 morseCode = StringVar()
 morseCodeTxBox = Text(frame2, height=5, width=100,
@@ -107,8 +183,8 @@ morseCodeTxBox = Text(frame2, height=5, width=100,
 morseCodeTxBox.grid(column=1, row=6, padx=20, pady=20)
 """
         Comando de tocar quase completo. Precisa ajustar.
-    """
-playsoundsBtn = Button(frame2, text="Play Morse Code",
+"""
+playsoundsBtn = Button(frame2, textvariable=playsoundsBtnTxt,
                        command=decodingMorseToSong)
 playsoundsBtn.grid(column=2, row=6)
 
