@@ -14,6 +14,7 @@ import encodeMorse
 
 ###GLOBAL VAR####
 textEntry = ''
+lang = 'English'  # Initial language
 
 ###LANG DICT###
 langPtBr = {"language": "Português Brasil",
@@ -75,12 +76,21 @@ def decodingMorseToSong():
 
 
 def radioSelection():
-    if(str(optionVar.get()) == 'decode'):
-        txtBtn.set("Decode Message")
+    global lang, langEn, langPtBr
+    if(str(optionVar.get()) == 'decode' and lang == langEn["language"]):
+        txtBtn.set(str(langEn["textBtn"]))
         encodeBtn['textvariable'] = txtBtn
         encodeBtn['command'] = decodingMorse
-    elif(str(optionVar.get()) == 'code'):
-        txtBtn.set("Encode Message")
+    elif(str(optionVar.get()) == 'decode' and lang == langPtBr["language"]):
+        txtBtn.set(langPtBr["textBtn"])
+        encodeBtn['textvariable'] = txtBtn
+        encodeBtn['command'] = decodingMorse
+    elif(str(optionVar.get()) == 'code' and lang == langEn["language"]):
+        txtBtn.set(langEn["textBtn"])
+        encodeBtn['textvariable'] = txtBtn
+        encodeBtn['command'] = encodingMorse
+    elif(str(optionVar.get()) == 'code' and lang == langPtBr["language"]):
+        txtBtn.set(langPtBr["textBtn"])
         encodeBtn['textvariable'] = txtBtn
         encodeBtn['command'] = encodingMorse
     else:
@@ -88,14 +98,15 @@ def radioSelection():
 
 
 def changeLanguage(choise):
+    global lang, langPtBr, langEn
+    lang = choise
     if(choise == langPtBr["language"]):
         projectTitleTxt.set(langPtBr["projectTitle"])
         instruTxt.set(langPtBr["instru"])
         infoTextTxt.set(langPtBr["infoText"])
         radioCode.set(langPtBr["radioCode"])
         radioDecode.set(langPtBr["radioDecode"])
-        # txtBtn.set(langPtBr["txtBtn"])
-        #encodeBtn['textvariable'] = txtBtn
+        txtBtn.set(langPtBr["textBtn"])
         titleFrame2Txt.set(langPtBr["titleFrame2"])
         playsoundsBtn['textvariable'] = playsoundsBtnTxt.set(
             langPtBr["playsoundsBtn"])
@@ -106,7 +117,7 @@ def changeLanguage(choise):
         infoTextTxt.set(langEn["infoText"])
         radioCode.set(langEn["radioCode"])
         radioDecode.set(langEn["radioDecode"])
-        # txtBtn.set(langEn["txtBtn"])
+        txtBtn.set(langEn["textBtn"])
         titleFrame2Txt.set(langEn["titleFrame2"])
         playsoundsBtnTxt.set(langEn["playsoundsBtn"])
 

@@ -24,7 +24,7 @@ def encodeMorse(stringToEncode):
     for char in stringToEncode:
         if(char in char_to_dots):
             morseCode += char_to_dots[char]+" "
-    return morseCode[:-1]
+    return processingStr(morseCode[:-1])
 
 
 """"
@@ -40,7 +40,7 @@ def decodeMorse(stringToDecode):
         for key in char_to_dots.keys():
             if(char_to_dots[key] == letter):
                 stringFinal += key + " "
-    return stringFinal[:-1]
+    return processingStr(stringFinal[:-1])
 
 
 """ 
