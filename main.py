@@ -43,6 +43,8 @@ langEn = {"language": "English",
           "radioDecode": "Decode"}
 # END LANG VAR
 
+# Function to play sounds from a string.
+
 
 def playSounds(sounds):
     for som in sounds:
@@ -54,6 +56,8 @@ def playSounds(sounds):
             playsound(
                 os.path.join(os.getcwd(), 'sounds', som + '.wav'))
 
+# Function to encoding morse and show in Text Widget
+
 
 def encodingMorse():
     global textEntry
@@ -62,6 +66,8 @@ def encodingMorse():
     codeMorse = encodeMorse.encodeMorse(textEntry)
     morseCode.set(codeMorse)
     morseCodeTxBox.insert(END, codeMorse)
+
+# Function to decoding morse and show in Text Widget
 
 
 def decodingMorse():
@@ -78,6 +84,7 @@ def decodingMorseToSong():
     playSounds(decode)
 
 
+# Function to modify a button text lang and selection 'code' or 'decode' using radio button
 def radioSelection():
     global lang, langEn, langPtBr, radioSelect
     radioSelect = str(optionVar.get())
@@ -99,6 +106,8 @@ def radioSelection():
         encodeBtn['command'] = encodingMorse
     else:
         print("Error!")
+
+# Function to modify language using option menu. Two language selected: Portuguese and English
 
 
 def changeLanguage(choise):
@@ -168,28 +177,30 @@ titleProjLb = Label(frame,
                     )
 titleProjLb.grid(columns=3, row=0)
 
+# language components
 langList = [langPtBr["language"], langEn["language"]]
 langSelected = StringVar(inicialScreen, "Language")
-print(langList)
-
 langSelect = OptionMenu(frame, langSelected, *langList, command=changeLanguage)
 langSelect.grid(columns=1, row=0, padx=10, pady=10)
-
+# Instruction components
 instrucLb = Label(frame, textvariable=instruTxt,
                   font=('Arial normal', 12))
 instrucLb.grid(columns=2, row=1, padx=10, pady=10)
 
 infoTextLb = Label(frame, textvariable=infoTextTxt)
 infoTextLb.grid(columns=1, row=2, padx=10, pady=10)
-
+# convertion components
 textToConvertEn = Entry(frame, width=100)
 textToConvertEn.grid(column=1, row=2, padx=20, pady=20)
+
+# Radio component to select operation 'code' to code in Morse or 'decode' to chose decode in Morse
 optionVar = StringVar(None, 'code')
 Radiobutton(frame, value='code', variable=optionVar, textvariable=radioCode, command=radioSelection).grid(
     column=0, row=3, padx=10, pady=10)
 Radiobutton(frame, value='decode', variable=optionVar, textvariable=radioDecode, command=radioSelection).grid(
     column=1, row=3, padx=10, pady=10)
 
+# button to execute a code or decode
 encodeBtn = Button(frame, textvariable=txtBtn, command=encodingMorse)
 encodeBtn.grid(column=2, row=3, padx=10, pady=10)
 
@@ -199,15 +210,16 @@ encodeBtn.grid(column=2, row=3, padx=10, pady=10)
 """
 titleFrame2 = Label(frame2, textvariable=titleFrame2Txt)
 titleFrame2.grid(column=1, row=4, padx=10, pady=10)
+# Part to show results of code or decode code.
 morseCode = StringVar()
 morseCodeTxBox = Text(frame2, height=5, width=100,
                       bg="light cyan")
 morseCodeTxBox.grid(column=1, row=6, padx=20, pady=20)
-"""
-        Comando de tocar quase completo. Precisa ajustar.
-"""
+
+# This button play sound. Its work only code option
 playsoundsBtn = Button(frame2, textvariable=playsoundsBtnTxt,
                        command=decodingMorseToSong)
 playsoundsBtn.grid(column=2, row=6)
 
+# Create a screen
 inicialScreen.mainloop()
